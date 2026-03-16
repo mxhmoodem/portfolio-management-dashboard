@@ -1,0 +1,17 @@
+# POST http://localhost:3000/auth/login HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "username": "adminUsername",
+#     "password": "testPassword"
+# }
+
+# POST http://localhost:3000/auth/register HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "username": "adminUsername",
+#     "password": "testPassword",
+#     "fname": "Bob",
+#     "lname": "McBobface"
+# }

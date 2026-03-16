@@ -1,0 +1,2 @@
+# GET http://localhost:3000/user/balance HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6W3sidXVpZCI6IjQ4YjZjMjRiLTgyODQtNGZiZS1iMGIyLTJiMDJkMDQ4NDZiYSJ9XSwidXNlcm5hbWUiOiJ0ZXN0VXNlcm5hbWUiLCJpYXQiOjE3NTYzODQzNjMsImV4cCI6MTc1NjM4Nzk2M30.ptUuaekKyRwXwPUwsFTHjFuM7V_sr1VevgbrubXxybY

@@ -1,0 +1,1695 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Crownline",
+        "description": "Crownline Stock API - Provides stock prices, company search, news articles, and financial data.",
+        "version": "0.0.1"
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        { "bearerAuth": [] }
+    ],
+    "tags": [
+        {
+            "name": "API",
+            "description": "Endpoints related to the API"
+        },
+        {
+            "name": "Authorisation",
+            "description": "Endpoints related to user authorisation"
+        },
+        {
+            "name": "Buy and Sell",
+            "description": "Endpoints related to the buying and selling of stocks"
+        },
+        {
+            "name": "Middleware",
+            "description": "Endpoints related to the middleware"
+        },
+        {
+            "name": "Portfolio",
+            "description": "Endpoints related to the users portfolio"
+        },
+        {
+            "name": "User",
+            "description": "Endpoints related to the user"
+        }
+    ],
+    "paths": {
+        "/price/{tag}": {
+            "get": {
+                "summary": "Price of a stock by tag",
+                "description": "Gets the price of a stock by its tag",
+                "tags" : ["API"],
+                "parameters": [{
+                    "name": "tag",
+                    "in": "path",
+                    "required": true,
+                    "description": "The tag of the desired stock",
+                    "schema": {
+                        "type": "string",
+                        "example": "AAPL"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "The price of the stock",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                       "ask": {
+                                            "type": "float",
+                                            "example": 150.00
+                                        },
+                                        "bid": {
+                                            "type": "float",
+                                            "example": 148.00
+                                        },
+                                        "currency": {
+                                            "type": "string",
+                                            "example": "USD"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/search/{query}": {
+            "get": {
+                "summary": "Search for a company",
+                "description": "Return a list of companies that match the search query",
+                "tags" : ["API"],
+                "parameters": [{
+                    "name": "query",
+                    "in": "path",
+                    "required": true,
+                    "description": "The search query",
+                    "schema": {
+                        "type": "string",
+                        "example": "Apple"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "A list of all the films with the desired rating",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "exchange": {
+                                                "type": "string",
+                                                "example": "NMA"
+                                            },
+                                            "shortname": {
+                                                "type": "string",
+                                                "example": "Alphabet Inc."
+                                            },
+                                            "quoteType": {
+                                                "type": "string",
+                                                "example": "EQUITY"
+                                            },
+                                            "symbol": {
+                                                "type": "string",
+                                                "example": "GOOG"
+                                            },
+                                            "index": {
+                                                "type": "string",
+                                                "example": "quotes"
+                                            },
+                                            "score": {
+                                                "type": "integer",
+                                                "example": "11469500"
+                                            },
+                                            "typeDisp": {
+                                                "type": "string",
+                                                "example": "Equity"
+                                            },
+                                            "longname": {
+                                                "type": "string",
+                                                "example": "Alphabet Inc."
+                                            },
+                                            "exchDisp": {
+                                                "type": "string",
+                                                "example": "NASDAQ"
+                                            },
+                                            "sector": {
+                                                "type": "string",
+                                                "example": "Communication Services"
+                                            },
+                                            "sectorDisp": {
+                                                "type": "string",
+                                                "example": "Communication Services"
+                                            },
+                                            "industry": {
+                                                "type": "string",
+                                                "example": "Internet Content & Information"
+                                            },
+                                            "industryDisp": {
+                                                "type": "string",
+                                                "example": "Internet Content & Information"
+                                            },
+                                            "dispSecIndFlag": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "isYahooFinance": {
+                                                "type": "boolean",
+                                                "example": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/search/news/{query}": {
+            "get": {
+                "summary": "Searches news articles",
+                "description": "Searches the full news database using a query and returns matches",
+                "tags" : ["API"],
+                "parameters": [{
+                    "name": "query",
+                    "in": "path",
+                    "required": true,
+                    "description": "The query to search for",
+                    "schema": {
+                        "type": "string",
+                        "example": "Nvidia"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "A list of all the films retrieved from the oMDB database through the search function",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "uuid": {
+                                                "type": "string",
+                                                "example": "24be04ac-27d7-319a-8536-fbf24fd60cf0"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Nvidia Stock Slips. Why Wall Street Still Loves the Shares."
+                                            },
+                                            "publisher": {
+                                                "type": "string",
+                                                "example": "Barrons.com"
+                                            },
+                                            "link": {
+                                                "type": "string",
+                                                "example": "https://finance.yahoo.com/m/24be04ac-27d7-319a-8536-fbf24fd60cf0/nvidia-stock-slips.-why-wall.html"
+                                            },
+                                            "providerPublishTime": {
+                                                "type": "date",
+                                                "example": "2025-08-29T13:09:00.000Z"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "example": "STORY"
+                                            },
+                                            "thumbnail": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "resolutions": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "https://s.yimg.com/uu/api/res/1.2/ltSA5e8dLs0k0.Ankq1TYg--~B/aD02NDA7dz0xMjgwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/Barrons.com/a2eec71faee37dc2dbfe4c321372f23d"
+                                                            },
+                                                            "width": {
+                                                                "type": "integer",
+                                                                "example": 1280
+                                                            },
+                                                            "height": {
+                                                                "type": "integer",
+                                                                "example": 640
+                                                            },
+                                                            "tag": {
+                                                                "type": "string",
+                                                                "example": "original"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "relatedTickers": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "example": "BABAF"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/search/financial/{query}": {
+            "get": {
+                "summary": "Get financial data by query",
+                "description": "Retrieve financial data using the provided query",
+                "tags" : ["API"],
+                "parameters": [{
+                    "name": "query",
+                    "in": "path",
+                    "required": true,
+                    "description": "The search query for financial data",
+                    "schema": {
+                        "type": "string",
+                        "example": "AAPL"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "A list of financial data matching the query",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "language": {
+                                                "type": "string",
+                                                "example": "en-US"
+                                            },
+                                            "region": {
+                                                "type": "string",
+                                                "example": "US"
+                                            },
+                                            "quoteType": {
+                                                "type": "string",
+                                                "example": "EQUITY"
+                                            },
+                                            "typeDisp": {
+                                                "type": "string",
+                                                "example": "Equity"
+                                            },
+                                            "quoteSourceName": {
+                                                "type": "string",
+                                                "example": "Nasdaq Real Time Price"
+                                            },
+                                            "triggerable": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "customPriceAlertConfidence": {
+                                                "type": "string",
+                                                "example": "HIGH"
+                                            },
+                                            "currency": {
+                                                "type": "string",
+                                                "example": "USD"
+                                            },
+                                            "regularMarketChangePercent": {
+                                                "type": "float",
+                                                "example": "0.12470268"
+                                            },
+                                            "regularMarketPrice": {
+                                                "type": "float",
+                                                "example": "232.85"
+                                            },
+                                            "marketState": {
+                                                "type": "string",
+                                                "example": "REGULAR"
+                                            },
+                                            "corporateActions": {
+                                                "type": "Array"
+                                            },
+                                            "regularMarketTime": {
+                                                "type": "date",
+                                                "example": "2025-08-29T14:45:50.000Z"
+                                            },
+                                            "exchangeTimezoneShortName": {
+                                                "type": "string",
+                                                "example": "EDT"
+                                            },
+                                            "market": {
+                                                "type": "string",
+                                                "example": "us_market"
+                                            },
+                                            "esgPopulated": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "gmtOffSetMilliseconds": {
+                                                "type": "integer",
+                                                "example": -14400000
+                                            },
+                                            "exchange": {
+                                                "type": "string",
+                                                "example": "NMS"
+                                            },
+                                            "messageBoardId": {
+                                                "type": "string",
+                                                "example": "finmb_24937"
+                                            },
+                                            "exchangeTimezoneName": {
+                                                "type": "string",
+                                                "example": "America/New_York"
+                                            },
+                                            "shortName": {
+                                                "type": "string",
+                                                "example": "Apple Inc."
+                                            },
+                                            "longName": {
+                                                "type": "string",
+                                                "example": "Apple Inc."
+                                            },
+                                            "hasPrePostMarketData": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "firstTradeDateMilliseconds": {
+                                                "type": "date",
+                                                "example": "1980-12-12T14:30:00.000Z"
+                                            },
+                                            "priceHint": {
+                                                "type": "integer",
+                                                "example": 2
+                                            },
+                                            "regularMarketChange": {
+                                                "type": "integer",
+                                                "example": 0.29000854
+                                            },
+                                            "regularMarketDayHigh": {
+                                                "type": "string",
+                                                "example": 233.3613
+                                            },
+                                            "regularMarketDayRange": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "low": {
+                                                        "type": "float",
+                                                        "example": 231.37
+                                                    },
+                                                    "high": {
+                                                        "type": "float",
+                                                        "example": 233.3613
+                                                    }
+                                                }
+                                            },
+                                            "regularMarketDayLow": {
+                                                "type": "float",
+                                                "example": 231.37
+                                            },
+                                            "regularMarketVolume": {
+                                                "type": "float",
+                                                "example": 9950026
+                                            },
+                                            "regularMarketPreviousClose": {
+                                                "type": "float",
+                                                "example": 232.56
+                                            },
+                                            "bid": {
+                                                "type": "float",
+                                                "example": 231.02
+                                            },
+                                            "ask": {
+                                                "type": "float",
+                                                "example": 233.01
+                                            },
+                                            "bidSize": {
+                                                "type": "integer",
+                                                "example": 3
+                                            },
+                                            "askSize": {
+                                                "type": "integer",
+                                                "example": 10
+                                            },
+                                            "fullExchangeName": {
+                                                "type": "string",
+                                                "example": "NasdaqGS"
+                                            },
+                                            "financialCurrency": {
+                                                "type": "string",
+                                                "example": "USD"
+                                            },
+                                            "regularMarketOpen": {
+                                                "type": "float",
+                                                "example": 232.56
+                                            },
+                                            "averageDailyVolume3Month": {
+                                                "type": "integer",
+                                                "example": 54441203
+                                            },
+                                            "averageDailyVolume10Day": {
+                                                "type": "integer",
+                                                "example": 40314310
+                                            },
+                                            "fiftyTwoWeekLowChange": {
+                                                "type": "float",
+                                                "example": 63.64
+                                            },
+                                            "fiftyTwoWeekLowChangePercent": {
+                                                "type": "float",
+                                                "example": 0.3761007
+                                            },
+                                            "fiftyTwoWeekRange": {
+                                                "type": "objecy",
+                                                "properties": {
+                                                    "low": {
+                                                        "type": "float",
+                                                        "example": 169.21
+                                                    },
+                                                    "high": {
+                                                        "type": "float",
+                                                        "example": 260.1
+                                                    }
+                                                }
+                                            },
+                                            "fiftyTwoWeekHighChange": {
+                                                "type": "float",
+                                                "example": -27.25
+                                            },
+                                            "fiftyTwoWeekHighChangePercent": {
+                                                "type": "float",
+                                                "example": -0.1047674
+                                            },
+                                            "fiftyTwoWeekLow": {
+                                                "type": "float",
+                                                "example": 169.21
+                                            },
+                                            "fiftyTwoWeekHigh": {
+                                                "type": "float",
+                                                "example": 260.1
+                                            },
+                                            "fiftyTwoWeekChangePercent": {
+                                                "type": "float",
+                                                "example": 1.5545845
+                                            },
+                                            "dividendDate": {
+                                                "type": "date",
+                                                "example": "2025-08-14T00:00:00.000Z"
+                                            },
+                                            "earningsTimestamp": {
+                                                "type": "date",
+                                                "example": "2025-07-31T20:00:00.000Z"
+                                            },
+                                            "earningsTimestampStart": {
+                                                "type": "date",
+                                                "example": "2025-10-30T20:00:00.000Z"
+                                            },
+                                            "earningsTimestampEnd": {
+                                                "type": "date",
+                                                "example": "2025-10-30T20:00:00.000Z"
+                                            },
+                                            "earningsCallTimestampStart": {
+                                                "type": "integer",
+                                                "example": "1753995600"
+                                            },
+                                            "earningsCallTimestampEnd": {
+                                                "type": "integer",
+                                                "example": "1753995600"
+                                            },
+                                            "isEarningsDateEstimate": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "trailingAnnualDividendRate": {
+                                                "type": "float",
+                                                "example": 1.01
+                                            },
+                                            "trailingPE": {
+                                                "type": "float",
+                                                "example": 35.38754
+                                            },
+                                            "dividendRate": {
+                                                "type": "float",
+                                                "example": 1.04
+                                            },
+                                            "trailingAnnualDividendYield": {
+                                                "type": "float",
+                                                "example": 0.0043429653
+                                            },
+                                            "dividendYield": {
+                                                "type": "float",
+                                                "example": 0.45
+                                            },
+                                            "epsTrailingTwelveMonths": {
+                                                "type": "float",
+                                                "example": 6.58
+                                            },
+                                            "epsForward": {
+                                                "type": "float",
+                                                "example": 8.31
+                                            },
+                                            "epsCurrentYear": {
+                                                "type": "float",
+                                                "example": 7.38566
+                                            },
+                                            "priceEpsCurrentYear": {
+                                                "type": "float",
+                                                "example": 31.527311
+                                            },
+                                            "sharesOutstanding": {
+                                                "type": "integer",
+                                                "example": 14840399872
+                                            },
+                                            "bookValue": {
+                                                "type": "float",
+                                                "example": 4.431
+                                            },
+                                            "fiftyDayAverage": {
+                                                "type": "float",
+                                                "example": 214.8364
+                                            },
+                                            "fiftyDayAverageChange": {
+                                                "type": "float",
+                                                "example": 18.01361
+                                            },
+                                            "fiftyDayAverageChangePercent": {
+                                                "type": "float",
+                                                "example": 0.083848044
+                                            },
+                                            "twoHundredDayAverage": {
+                                                "type": "float",
+                                                "example": 221.141
+                                            },
+                                            "twoHundredDayAverageChange": {
+                                                "type": "float",
+                                                "example": 11.709
+                                            },
+                                            "twoHundredDayAverageChangePercent": {
+                                                "type": "float",
+                                                "example": 0.052948117
+                                            },
+                                            "marketCap": {
+                                                "type": "integer",
+                                                "example": 3455587188736
+                                            },
+                                            "forwardPE": {
+                                                "type": "float",
+                                                "example": 28.020456
+                                            },
+                                            "priceToBook": {
+                                                "type": "float",
+                                                "example": 52.550213
+                                            },
+                                            "sourceInterval": {
+                                                "type": "integer",
+                                                "example": 15
+                                            },
+                                            "exchangeDataDelayedBy": {
+                                                "type": "integer",
+                                                "example": 0
+                                            },
+                                            "averageAnalystRating": {
+                                                "type": "string",
+                                                "example": "2.0 - Buy"
+                                            },
+                                            "tradeable": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "cryptoTradeable": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "displayName": {
+                                                "type": "string",
+                                                "example": "Apple"
+                                            },
+                                            "symbol": {
+                                                "type": "string",
+                                                "example": "AAPL"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "summary": "Registers a new user",
+                "description": "Creates a new user account",
+                "tags" : ["Authorisation"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "Bob"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "fname": {
+                                        "type": "string",
+                                        "example": "Bob"
+                                    },
+                                    "lname": {
+                                        "type": "string",
+                                        "example": "McBobface"
+                                    }
+                                },
+                                "required": ["username", "password", "fname", "lname"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully created"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/auth/users": {
+            "get": {
+                "summary": "Get all users (Admin)",
+                "description": "Retrieve a list of all users (Requires Admin Authorisation)",
+                "tags" : ["Authorisation"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "All users retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                       "uuid": {
+                                            "type": "uuid",
+                                            "example": "e9e49e73-41ff-4894-ad58-1139c7d09f00"
+                                        },
+                                        "username": {
+                                            "type": "string",
+                                            "example": "testUsername"
+                                        },
+                                        "password": {
+                                            "type": "hashed",
+                                            "example": "$2b$10$EIXZQ1z5Q5Q5Q5Q5Q5Q5QO"
+                                        },
+                                        "fname": {
+                                            "type": "string",
+                                            "example": "Bob"
+                                        },
+                                        "lname": {
+                                            "type": "string",
+                                            "example": "McBobface"
+                                        },
+                                        "money": {
+                                            "type": "Float",
+                                            "example": 150.00
+                                        },
+                                        "prefered_currency": {
+                                            "type": "string",
+                                            "example": "usd"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "summary": "User login",
+                "description": "Authenticate a user and return a JWT token",
+                "tags" : ["Authorisation"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "Bob"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "required": ["username", "password"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/buy/{tag}": {
+            "post": {
+                "summary": "Buy a stock",
+                "description": "Purchase a stock by its tag",
+                "tags" : ["Buy and Sell"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [{
+                    "name": "tag",
+                    "in": "path",
+                    "required": true,
+                    "description": "The tag of the desired stock",
+                    "schema": {
+                        "type": "string",
+                        "example": "AAPL"
+                    }
+                }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "stockAmount": {
+                                        "type": "float",
+                                        "example": 10
+                                    },
+                                    "priceAmount": {
+                                        "type": "float",
+                                        "example": 200.50
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "example": "usd"
+                                    },
+                                    "portfolio_uuid": {
+                                        "type": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                    }
+                                },
+                                "required": ["currency", "portfolio_uuid"],
+                                "oneOf": [
+                                    { "required": ["stockAmount"] },
+                                    { "required": ["priceAmount"] }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Stock bought successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bought 10 shares for 2001 usd of Google at 200.10 usd per share"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/sell/{tag}": {
+            "post": {
+                "summary": "Sell a stock",
+                "description": "Sell a stock by its tag",
+                "tags" : ["Buy and Sell"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [{
+                    "name": "tag",
+                    "in": "path",
+                    "required": true,
+                    "description": "The tag of the desired stock",
+                    "schema": {
+                        "type": "string",
+                        "example": "AAPL"
+                    }
+                }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "stockAmount": {
+                                        "type": "float",
+                                        "example": 10
+                                    },
+                                    "priceAmount": {
+                                        "type": "float",
+                                        "example": 200.50
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "example": "usd"
+                                    },
+                                    "portfolio_uuid": {
+                                        "type": "uuid",
+                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                    }
+                                },
+                                "required": ["currency", "portfolio_uuid"],
+                                "oneOf": [
+                                    { "required": ["stockAmount"] },
+                                    { "required": ["priceAmount"] }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Stock sold successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sold 10 shares for 2001 usd of Google at 200.10 usd per share"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/convert": {
+            "post": {
+                "summary": "Convert currency",
+                "description": "Convert money from one currency to another",
+                "tags" : ["Middleware"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "type": "float",
+                                        "example": 200.50
+                                    },
+                                    "fromCurrency": {
+                                        "type": "string",
+                                        "example": "gbp"
+                                    },
+                                    "toCurrency": {
+                                        "type": "string",
+                                        "example": "usd"
+                                    }
+                                },
+                                "required": ["amount", "fromCurrency", "toCurrency"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Currency converted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "amount": {
+                                            "type": "float",
+                                            "example": 256.78
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/clean": {
+            "get": {
+                "summary": "Cleanse all databases (Admin)",
+                "description": "Reset all databases to its initial state (Requires Admin Authorisation)",
+                "tags" : ["Middleware"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "All databases cleansed successfully"
+                    },
+                    "500": {
+                        "description": "Error cleaning databases"
+                    }
+                }
+            }
+        },
+        "/sync": {
+            "get": {
+                "summary": "Update all stock prices",
+                "description": "Updates all stock prices in the database to the latest available prices and update user shares worth",
+                "tags" : ["Middleware"],
+                "responses": {
+                    "200": {
+                        "description": "All stocks updates successfully"
+                    },
+                    "500": {
+                        "description": "Error updating stocks"
+                    }
+                }
+            }
+        },
+        "/user/portfolio": {
+            "get": {
+                "summary": "Gets all portfolios for the logged in user",
+                "description": "Retrieve all portfolios associated with the authenticated user",
+                "tags" : ["Portfolio"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Portfolios retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "uuid": {
+                                                "type": "uuid",
+                                                "example": "3cef33a6-3f3a-45f5-85f3-6884ca878400"
+                                            },
+                                            "owner_uuid": {
+                                                "type": "uuid",
+                                                "example": "1cb05ee4-b6d6-434c-9dca-6d263c9ed199"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Example Portfolio"
+                                            },
+                                            "value": {
+                                                "type": "float",
+                                                "example": 200.15
+                                            },
+                                            "inputValue": {
+                                                "type": "float",
+                                                "example": 150.53
+                                            },
+                                            "prefered_currency": {
+                                                "type": "string",
+                                                "example": "usd"
+                                            },
+                                            "is_default": {
+                                                "type": "boolean",
+                                                "example": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/portfolio/create": {
+            "post": {
+                "summary": "Create a new portfolio for the logged in user",
+                "description": "Creates a new portfolio associated with the authenticated user",
+                "tags" : ["Portfolio"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Example Portfolio"
+                                    },
+                                    "isDefault": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "required": ["name"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Portfolio Created Successfully"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/portfolio/update": {
+            "patch": {
+                "summary": "Update a portfolio for the logged in user",
+                "description": "Updates a portfolio associated with the authenticated user",
+                "tags" : ["Portfolio"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Example Portfolio"
+                                    },
+                                    "isDefault": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "oneOf": [
+                                    { "required": ["name"] },
+                                    { "required": ["isDefault"] }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Portfolio Updated Successfully"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/portfolio/{portfolio_uuid}": {
+            "delete": {
+                "summary": "Deletes a portfolio for the logged in user",
+                "description": "Deletes a portfolio associated with the authenticated user",
+                "tags" : ["Portfolio"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [{
+                    "name": "portfolio_uuid",
+                    "in": "path",
+                    "required": true,
+                    "description": "The desired portfolios UUID",
+                    "schema": {
+                        "type": "string",
+                        "example": "3cef33a6-3f3a-45f5-85f3-6884ca878400"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Portfolio Deleted Successfully"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/portfolio/value/{portfolio_uuid}": {
+            "get": {
+                "summary": "Gets the portfolio value",
+                "description": "Gets the portfolio value for a specific portfolio for the logged in user",
+                "tags" : ["Portfolio"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [{
+                    "name": "portfolio_uuid",
+                    "in": "path",
+                    "required": true,
+                    "description": "The desired portfolios UUID",
+                    "schema": {
+                        "type": "string",
+                        "example": "3cef33a6-3f3a-45f5-85f3-6884ca878400"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Portfolio Value Retreieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": {
+                                            "type": "float",
+                                            "example": 12002.24
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/portfolio/return/{portfolio_uuid}": {
+            "get": {
+                "summary": "Gets the portfolio return value",
+                "description": "Gets the portfolio return value for a specific portfolio for the logged in user",
+                "tags" : ["Portfolio"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [{
+                    "name": "portfolio_uuid",
+                    "in": "path",
+                    "required": true,
+                    "description": "The desired portfolios UUID",
+                    "schema": {
+                        "type": "string",
+                        "example": "3cef33a6-3f3a-45f5-85f3-6884ca878400"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Portfolio Return Value Retreieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": {
+                                            "type": "float",
+                                            "example": 12002.24
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/portfolio/return/percentage/{portfolio_uuid}": {
+            "get": {
+                "summary": "Gets the portfolio return value percentage",
+                "description": "Gets the portfolio return value for a specific portfolio for the logged in user as a percentage",
+                "tags" : ["Portfolio"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [{
+                    "name": "portfolio_uuid",
+                    "in": "path",
+                    "required": true,
+                    "description": "The desired portfolios UUID",
+                    "schema": {
+                        "type": "string",
+                        "example": "3cef33a6-3f3a-45f5-85f3-6884ca878400"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Portfolio Return Percent Retreieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": {
+                                            "type": "float",
+                                            "example": 12002.24
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/fname": {
+            "get": {
+                "summary": "Gets the users first name",
+                "description": "Retrieve the first name of the authenticated user",
+                "tags" : ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "First Name Retreieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "firstName": {
+                                            "type": "string",
+                                            "example": "Bob"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/lname": {
+            "get": {
+                "summary": "Gets the users last name",
+                "description": "Retrieve the last name of the authenticated user",
+                "tags" : ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Last Name Retreieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "lastName": {
+                                            "type": "string",
+                                            "example": "McBobface"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/name": {
+            "get": {
+                "summary": "Gets the users full name",
+                "description": "Retrieve the full name of the authenticated user",
+                "tags" : ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Full Name Retreieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "fullName": {
+                                            "type": "string",
+                                            "example": "Bob McBobface"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/deposit": {
+            "post": {
+                "summary": "Deposits money into the users account",
+                "description": "Deposit money into the authenticated users account",
+                "tags" : ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "type": "float",
+                                        "example": 100.20
+                                    }
+                                },
+                                "required": ["amount"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Money Deposited Successfully"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/withdraw": {
+            "post": {
+                "summary": "Withdraws money into the users account",
+                "description": "Withdraws money into the authenticated users account",
+                "tags" : ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "type": "float",
+                                        "example": 100.20
+                                    }
+                                },
+                                "required": ["amount"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Money Withdrawn Successfully"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/balance": {
+            "get": {
+                "summary": "Gets the users account balance",
+                "description": "Gets the users current account balance",
+                "tags" : ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Money Withdrawn Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "balance": {
+                                            "type": "float",
+                                            "example": 24309.23
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/shares/{portfolio_uuid}": {
+            "get": {
+                "summary": "Gets the users account balance",
+                "description": "Gets the users current account balance",
+                "tags" : ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [{
+                    "name": "portfolio_uuid",
+                    "in": "path",
+                    "required": true,
+                    "description": "The desired portfolios UUID",
+                    "schema": {
+                        "type": "string",
+                        "example": "3cef33a6-3f3a-45f5-85f3-6884ca878400"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Shares Retreieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "tag": {
+                                            "type": "string",
+                                            "example": "GOOG"
+                                        },
+                                        "portfolio_uuid": {
+                                            "type": "uuid",
+                                            "example": "15d05b38-90b3-4b6b-af9b-374fca75ec4d"
+                                        },
+                                        "user_uuid": {
+                                            "type": "uuid",
+                                            "example": "d191ba5e-5d80-4473-b70a-2827aeea3c80"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Alphabet Inc."
+                                        },
+                                        "current_ask": {
+                                            "type": "float",
+                                            "example": 213.67
+                                        },
+                                        "current_bid": {
+                                            "type": "float",
+                                            "example": 213.45
+                                        },
+                                        "amount_owned": {
+                                            "type": "float",
+                                            "example": 74.882
+                                        },
+                                        "total_invested": {
+                                            "type": "float",
+                                            "example": 16000.00
+                                        },
+                                        "total_value": {
+                                            "type": "float",
+                                            "example": 15983.56
+                                        },
+                                        "currency": {
+                                            "type": "string",
+                                            "example": "usd"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/logs": {
+            "get": {
+                "summary": "Gets the users transaction logs",
+                "description": "Gets the users transaction logs",
+                "tags" : ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Logs Retreieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "timestamp": {
+                                            "type": "date",
+                                            "example": "2025-08-30T17:22:30.000Z"
+                                        },
+                                        "buy_sell": {
+                                            "type": "string",
+                                            "enum": ["buy", "sell"],
+                                            "example": "buy"
+                                        },
+                                        "amount": {
+                                            "type": "float",
+                                            "example": 400.00
+                                        },
+                                        "stock_traded": {
+                                            "type": "float",
+                                            "example": 18.7205
+                                        },
+                                        "price_per": {
+                                            "type": "float",
+                                            "example": 213.67
+                                        },
+                                        "currency": {
+                                            "type": "string",
+                                            "example": "usd"
+                                        },
+                                        "stock_tag": {
+                                            "type": "string",
+                                            "example": "GOOG"
+                                        },
+                                        "portfolio_uuid": {
+                                            "type": "uuid",
+                                            "example": "15d05b38-90b3-4b6b-af9b-374fca75ec4d"
+                                        },
+                                        "owner_uuid": {
+                                            "type": "uuid",
+                                            "example": "d191ba5e-5d80-4473-b70a-2827aeea3c80"
+                                        },
+                                        "createdAt": {
+                                            "type": "date",
+                                            "example": "2025-08-30T17:22:30.000Z"
+                                        },
+                                        "updatedAt": {
+                                            "type": "date",
+                                            "example": "2025-08-30T17:22:30.000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/currency": {
+            "post": {
+                "summary": "Changes preffered currency",
+                "tags" : ["User"],
+                "description": "Change the users preffered currency",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "currency": {
+                                        "type": "string",
+                                        "example": "gbp"
+                                    }
+                                },
+                                "required": ["currency"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Default currency updated successfully"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Global Markets Rally Amid Economic Optimism",
+    "publisher": "Reuters",
+    "link": "https://www.reuters.com/markets/global-markets-rally",
+    "providerPublishTime": "2026-01-23T14:00:00Z",
+    "relatedTickers": ["AAPL", "MSFT", "GOOGL"]
+  },
+  {
+    "title": "Tech Stocks Lead Gains in Volatile Session",
+    "publisher": "Bloomberg",
+    "link": "https://www.bloomberg.com/tech-stocks-lead-gains",
+    "providerPublishTime": "2026-01-23T16:30:00Z",
+    "relatedTickers": ["NVDA", "TSLA", "AMZN"]
+  },
+  {
+    "title": "Financial Markets Brace for Fed Decision",
+    "publisher": "CNBC",
+    "link": "https://www.cnbc.com/financial-markets-fed-decision",
+    "providerPublishTime": "2026-01-24T09:00:00Z",
+    "relatedTickers": ["JPM", "BAC", "GS"]
+  }
+]

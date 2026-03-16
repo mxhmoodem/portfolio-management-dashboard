@@ -1,0 +1,71 @@
+# GET http://localhost:3000/price/GOOG HTTP/1.1
+
+# GET http://localhost:3000/search/Barc HTTP/1.1
+
+# GET http://localhost:3000/search/news/Nvidia HTTP/1.1
+
+GET http://localhost:3000/search/financial/GOOG HTTP/1.1
+
+# GET http://localhost:3000/search/financial/TCO0.F HTTP/1.1
+
+# GET http://localhost:3000/search/financial/HSBA HTTP/1.1
+
+# GET http://localhost:3000/convert HTTP/1.1
+
+# POST http://localhost:3000/buy/TCO0.F HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ5YjAwNzUzLTBiNTctNGJlNi1hZTA1LTJiYWM1MmMxZDhhZSIsInVzZXJuYW1lIjoiYWRtaW5Vc2VybmFtZSIsImlhdCI6MTc1NjgwMDEzNSwiZXhwIjoxNzU2ODg2NTM1fQ.q4cv4YNLvf-R1mCgx1MMzHDMCRWu121I5YgKVL5vjD4
+# Content-Type: application/json
+
+# {
+#     "stockAmount": "",
+#     "priceAmount": 4000,
+#     "currency": "usd"
+# }
+
+# POST http://localhost:3000/auth/register HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "username": "testUsername",
+#     "password": "testPassword"
+# }
+
+# GET http://localhost:3000/auth/users HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxOTFiYTVlLTVkODAtNDQ3My1iNzBhLTI4MjdhZWVhM2M4MCIsInVzZXJuYW1lIjoiYWRtaW5Vc2VybmFtZSIsImlhdCI6MTc1NjU3Mzk0NCwiZXhwIjoxNzU2NjYwMzQ0fQ.Hh66PMuVRjJ59t5H3_MM-ttDINgcALINYZ6C2BliIA0
+
+# POST http://localhost:3000/auth/login HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "username": "testUsername",
+#     "password": "testPassword"
+# }
+
+# GET http://localhost:3000/user/portfolio HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxOTFiYTVlLTVkODAtNDQ3My1iNzBhLTI4MjdhZWVhM2M4MCIsInVzZXJuYW1lIjoiYWRtaW5Vc2VybmFtZSIsImlhdCI6MTc1NjU3Mzk0NCwiZXhwIjoxNzU2NjYwMzQ0fQ.Hh66PMuVRjJ59t5H3_MM-ttDINgcALINYZ6C2BliIA0
+
+# POST http://localhost:3000/user/portfolio/create HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ5YjAwNzUzLTBiNTctNGJlNi1hZTA1LTJiYWM1MmMxZDhhZSIsInVzZXJuYW1lIjoiYWRtaW5Vc2VybmFtZSIsImlhdCI6MTc1NjgwMDEzNSwiZXhwIjoxNzU2ODg2NTM1fQ.q4cv4YNLvf-R1mCgx1MMzHDMCRWu121I5YgKVL5vjD4
+# Content-Type: application/json
+
+# {
+#     "name": "TestPortfolio",
+#     "isDefault": ""
+# }
+
+# POST http://localhost:3000/user/deposit HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ5YjAwNzUzLTBiNTctNGJlNi1hZTA1LTJiYWM1MmMxZDhhZSIsInVzZXJuYW1lIjoiYWRtaW5Vc2VybmFtZSIsImlhdCI6MTc1NjgwMDEzNSwiZXhwIjoxNzU2ODg2NTM1fQ.q4cv4YNLvf-R1mCgx1MMzHDMCRWu121I5YgKVL5vjD4
+# Content-Type: application/json
+
+# {
+#     "amount": 1000000
+# }
+
+# GET http://localhost:3000/user/shares/15d05b38-90b3-4b6b-af9b-374fca75ec4d HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxOTFiYTVlLTVkODAtNDQ3My1iNzBhLTI4MjdhZWVhM2M4MCIsInVzZXJuYW1lIjoiYWRtaW5Vc2VybmFtZSIsImlhdCI6MTc1NjU3Mzk0NCwiZXhwIjoxNzU2NjYwMzQ0fQ.Hh66PMuVRjJ59t5H3_MM-ttDINgcALINYZ6C2BliIA0
+
+# GET http://localhost:3000/user/logs HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxOTFiYTVlLTVkODAtNDQ3My1iNzBhLTI4MjdhZWVhM2M4MCIsInVzZXJuYW1lIjoiYWRtaW5Vc2VybmFtZSIsImlhdCI6MTc1NjU3Mzk0NCwiZXhwIjoxNzU2NjYwMzQ0fQ.Hh66PMuVRjJ59t5H3_MM-ttDINgcALINYZ6C2BliIA0
+
+# GET http://localhost:3000/clean HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxOTFiYTVlLTVkODAtNDQ3My1iNzBhLTI4MjdhZWVhM2M4MCIsInVzZXJuYW1lIjoiYWRtaW5Vc2VybmFtZSIsImlhdCI6MTc1NjU3Mzk0NCwiZXhwIjoxNzU2NjYwMzQ0fQ.Hh66PMuVRjJ59t5H3_MM-ttDINgcALINYZ6C2BliIA0

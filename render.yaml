@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: trading-app
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: trading-db
+          property: connectionString
+
+databases:
+  - name: trading-db
+    databaseName: trading_app
+    user: trading_user
+    plan: free
+    region: ohio
