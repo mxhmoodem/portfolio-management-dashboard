@@ -38,7 +38,7 @@
     "sequelize": "^6.37.7",
     "supertest": "^7.1.4",
     "swagger-ui-express": "^5.0.1",
-    "yahoo-finance2": "2.0.0"
+    "yahoo-finance2": "^3.13.2"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
