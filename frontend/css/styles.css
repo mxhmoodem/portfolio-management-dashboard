@@ -2150,8 +2150,8 @@ body.auth-page {
 }
 
 .table-empty .bar-chart-icon img {
-  width: 64px;
-  height: 64px;
+  width: 40px;
+  height: 40px;
 }
 
 .table-empty p {
@@ -2439,8 +2439,8 @@ body.auth-page {
 }
 
 .portfolios-empty .bar-chart-icon img {
-  width: 64px;
-  height: 64px;
+  width: 40px;
+  height: 40px;
   opacity: 0.7;
 }
 

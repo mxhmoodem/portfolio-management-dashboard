@@ -108,8 +108,7 @@ async function searchFincancials(req, res) {
             quotes.push(quote);
         } catch (err) {
             console.error("Unable to get quote: ", err);
-            res.status(500).json({error: "Internal Server Error "});
-            return;
+            continue;
         }
     }
     res.status(200).json(quotes);
