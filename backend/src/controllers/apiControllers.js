@@ -55,15 +55,27 @@ async function searchForCompany(req, res) {
     @return {object} - The news articles from the search query
 */
 async function searchNews(req, res) {
-    const search = req.params.query;    //Get query from params
+    const search = req.params.query;
+    const apiKey = process.env.NEWS_API_KEY;
     try {
-        const result = await YahooFinance.search(search, {}, { validateResult: false });   //Search Yahoo
-        res.status(200).json(result.news ?? []);
-        return;
+        const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(search)}&language=en&sortBy=publishedAt&pageSize=5&apiKey=${apiKey}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`NewsAPI responded with ${response.status}`);
+        }
+        const data = await response.json();
+        const articles = (data.articles ?? []).map(article => ({
+            title: article.title,
+            publisher: article.source?.name ?? 'Unknown',
+            link: article.url,
+            providerPublishTime: article.publishedAt
+                ? Math.floor(new Date(article.publishedAt).getTime() / 1000)
+                : null
+        }));
+        res.status(200).json(articles);
     } catch (error) {
         console.error("Error fetching news articles: ", error.message);
         res.status(500).json({error: "Internal Server Error"});
-        return;
     }
 }
 
