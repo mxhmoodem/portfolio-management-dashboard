@@ -57,11 +57,11 @@ async function searchForCompany(req, res) {
 async function searchNews(req, res) {
     const search = req.params.query;    //Get query from params
     try {
-        const result = await YahooFinance.search(search);   //Search Yahoo
-        res.status(200).json(result.news);
+        const result = await YahooFinance.search(search, {}, { validateResult: false });   //Search Yahoo
+        res.status(200).json(result.news ?? []);
         return;
     } catch (error) {
-        console.error("Error fetching news articles: ", error);
+        console.error("Error fetching news articles: ", error.message);
         res.status(500).json({error: "Internal Server Error"});
         return;
     }
