@@ -13,6 +13,10 @@ services:
         fromDatabase:
           name: trading-db
           property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: trading-db
+          property: port
       - key: DB_USER
         fromDatabase:
           name: trading-db
@@ -25,10 +29,6 @@ services:
         fromDatabase:
           name: trading-db
           property: database
-      - key: DB_PORT
-        fromDatabase:
-          name: trading-db
-          property: port
 
 databases:
   - name: trading-db
